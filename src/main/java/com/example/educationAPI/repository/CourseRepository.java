@@ -1,7 +1,8 @@
-package com.example._educationAPI.repository;
+package com.example.educationAPI.repository;
 
-import com.example._educationAPI.model.Course;
+import com.example.educationAPI.model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {
+    Course findByName(String name);
 }
