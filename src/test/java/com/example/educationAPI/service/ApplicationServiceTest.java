@@ -64,16 +64,19 @@ class ApplicationServiceTest {
     @DisplayName("Should be able to throw when invalid data")
     @Test
     void canThrowWhenInvalidData() {
+//        Throws because course with given name doesn't exist
         assertThrows(ResponseStatusException.class, () -> {
                     applicationService.addStudent(student, "Course PPP");
                 }
         );
 
+//        Throws because course with given name and id doesn't exist
         assertThrows(ResponseStatusException.class, () -> {
                     applicationService.addCourse(new AddCourseRequest("Course WWW", 113));
                 }
         );
 
+//        Throws because student with given id doesn't exist
         assertThrows(ResponseStatusException.class, () -> {
                     applicationService.getStudent(3111);
                 }

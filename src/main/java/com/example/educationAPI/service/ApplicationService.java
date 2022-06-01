@@ -29,13 +29,13 @@ public class ApplicationService {
             student.addCourseToStudent(course);
             return studentRepository.save(student);
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot save student - course not found!");
         }
     }
 
     public Course addCourse(AddCourseRequest addCourseRequest) {
         Tutor tutor = tutorRepository.findById(addCourseRequest.getTutorId()).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot save course - tutor not found!"));
 
         Course course = Course.builder()
                 .name(addCourseRequest.getName())
@@ -50,6 +50,6 @@ public class ApplicationService {
 
     public Student getStudent(int id) {
         return studentRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot get student - student not found!"));
     }
 }
