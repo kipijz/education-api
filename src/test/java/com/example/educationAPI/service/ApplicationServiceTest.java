@@ -37,16 +37,15 @@ class ApplicationServiceTest {
     @InjectMocks
     private ApplicationService applicationService;
 
+    private final List<Student> studentList = new ArrayList<>();
+    private final List<Course> courseList = new ArrayList<>();
+    private final Tutor tutor = new Tutor(1, "Tuco", "Salamanca");
+    private final Course course = new Course(1, "PE", studentList, tutor);
+    private final Student student = new Student(1, "JC", "Schneider", courseList);
+
     @DisplayName("Should be able to add course, student and tutor")
     @Test
     void canAddCourseStudentTutor() {
-        List<Student> studentList = new ArrayList<>();
-        List<Course> courseList = new ArrayList<>();
-
-        Tutor tutor = new Tutor(1, "Tuco", "Salamanca");
-        Course course = new Course(1, "PE", studentList, tutor);
-        Student student = new Student(1, "JC", "Schneider", courseList);
-
         given(tutorRepository.save(tutor)).willReturn(tutor);
         given(courseRepository.save(new Course(0, course.getName(), null, tutor))).willReturn(course);
         given(studentRepository.save(student)).willReturn(student);
@@ -65,13 +64,6 @@ class ApplicationServiceTest {
     @DisplayName("Should be able to throw when invalid data")
     @Test
     void canThrowWhenInvalidData() {
-        List<Student> studentList = new ArrayList<>();
-        List<Course> courseList = new ArrayList<>();
-
-        Tutor tutor = new Tutor(1, "Tuco", "Salamanca");
-        Course course = new Course(1, "PE", studentList, tutor);
-        Student student = new Student(1, "JC", "Schneider", courseList);
-
         assertThrows(ResponseStatusException.class, () -> {
                     applicationService.addStudent(student, "Course PPP");
                 }
